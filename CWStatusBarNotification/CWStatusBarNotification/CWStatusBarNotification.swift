@@ -220,7 +220,7 @@ open class CWStatusBarNotification : NSObject {
         }
     }
     
-    fileprivate func createNotificationLabelWithMessage(_ message : String) {
+    fileprivate func createNotificationLabel(withMessage message: String) {
         self.notificationLabel = ScrollLabel()
         self.notificationLabel?.numberOfLines = self.multiline ? 0 : 1
         self.notificationLabel?.text = message
@@ -235,7 +235,7 @@ open class CWStatusBarNotification : NSObject {
         }
     }
     
-    fileprivate func createNotificationWithCustomView(_ view : UIView) {
+    fileprivate func createNotification(withCustomView view: UIView) {
         self.customView = UIView()
         // no autoresizing masks so that we can create constraints manually
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -356,8 +356,7 @@ open class CWStatusBarNotification : NSObject {
     
     // MARK: - display notification
     
-    open func displayNotificationWithMessage(_ message : String,
-        completion : @escaping () -> ()) {
+    open func displayNotification(withMessage message: String, completion : @escaping () -> ()) {
             guard !self.notificationIsShowing else {
                 return
             }
@@ -368,8 +367,8 @@ open class CWStatusBarNotification : NSObject {
             self.createNotificationWindow()
             
             // create label
-            self.createNotificationLabelWithMessage(message)
-            
+            self.createNotificationLabel(withMessage: message)
+        
             // create status bar view
             self.createStatusBarView()
             
@@ -408,32 +407,26 @@ open class CWStatusBarNotification : NSObject {
             }) 
     }
     
-    open func displayNotificationWithMessage(_ message : String,
-        forDuration duration : TimeInterval) {
-            self.displayNotificationWithMessage(message) { () -> () in
-                self.dismissHandle = performClosureAfterDelay(duration, closure: {
-                    () -> () in
-                    self.dismissNotification()
-                })
-            }
+    open func displayNotification(withMessage message: String, forDuration duration : TimeInterval) {
+        self.displayNotification(withMessage: message) { () -> () in
+            self.dismissHandle = performClosureAfterDelay(duration, closure: {
+                () -> () in
+                self.dismissNotification()
+            })
+        }
     }
     
-    open func displayNotificationWithAttributedString(
-        _ attributedString : NSAttributedString, completion : @escaping () -> ()) {
-            self.displayNotificationWithMessage(attributedString.string,
-                completion: completion)
-            self.notificationLabel?.attributedText = attributedString
+    open func displayNotification(withAttributedString attributedString: NSAttributedString, completion : @escaping () -> ()) {
+        self.displayNotification(withMessage: attributedString.string, completion: completion)
+        self.notificationLabel?.attributedText = attributedString
     }
     
-    open func displayNotificationWithAttributedString(
-        _ attributedString : NSAttributedString,
-        forDuration duration : TimeInterval) {
-            self.displayNotificationWithMessage(attributedString.string,
-                forDuration: duration)
-            self.notificationLabel?.attributedText = attributedString
+    open func displayNotification(withAttributedString attributedString: NSAttributedString, forDuration duration : TimeInterval) {
+        self.displayNotification(withMessage: attributedString.string, forDuration: duration)
+        self.notificationLabel?.attributedText = attributedString
     }
     
-    open func displayNotificationWithView(_ view : UIView, completion : @escaping () -> ()) {
+    open func displayNotification(withView view: UIView, completion : @escaping () -> ()) {
         guard !self.notificationIsShowing else {
             return
         }
@@ -444,7 +437,7 @@ open class CWStatusBarNotification : NSObject {
         self.createNotificationWindow()
         
         // setup custom view
-        self.createNotificationWithCustomView(view)
+        self.createNotification(withCustomView: view)
         
         // create status bar view
         self.createStatusBarView()
@@ -478,16 +471,15 @@ open class CWStatusBarNotification : NSObject {
         }) 
     }
     
-    open func displayNotificationWithView(_ view : UIView,
-        forDuration duration : TimeInterval) {
-            self.displayNotificationWithView(view) { () -> () in
-                self.dismissHandle = performClosureAfterDelay(duration, closure: { () -> Void in
-                    self.dismissNotification()
-                })
-            }
+    open func displayNotification(withView view: UIView, forDuration duration : TimeInterval) {
+        self.displayNotification(withView: view) { () -> () in
+            self.dismissHandle = performClosureAfterDelay(duration, closure: { () -> Void in
+                self.dismissNotification()
+            })
+        }
     }
     
-    open func dismissNotificationWithCompletion(_ completion : (() -> ())?) {
+    open func dismissNotification(withCompletion completion: (() -> ())?) {
         cancelDelayedClosure(self.dismissHandle)
         self.notificationIsDismissing = true
         self.secondFrameChange()
@@ -520,6 +512,6 @@ open class CWStatusBarNotification : NSObject {
     }
     
     open func dismissNotification() {
-        self.dismissNotificationWithCompletion(nil)
+        self.dismissNotification(withCompletion: nil)
     }
 }
