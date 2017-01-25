@@ -1,8 +1,10 @@
-# CWStatusBarNotification - Swift Branch
+# CWStatusBarNotification - Swift Branch Fork
 
 [![Build Status](https://travis-ci.org/cezarywojcik/CWStatusBarNotification.png?branch=master)](https://travis-ci.org/cezarywojcik/CWStatusBarNotification)
 
-`CWStatusBarNotification` is a library that allows you to easily create text-based notifications that appear on the status bar.
+`CWStatusBarNotification` is a library that allows you to easily create text-based notifications that appear on the status bar.  This is a fork from the original for updated Swift 3 syntax.
+
+Credits to original: https://github.com/cezarywojcik/CWStatusBarNotification
 
 ![demo](screenshots/demo.gif)
 
@@ -14,9 +16,14 @@ Works for iPhone and iPad.
 
 ## Installation
 
-### Copy Files 
+### Carthage 
 
-Copy the two `*.swift` files from `CWStatusBarNotification/CWStatusBarNotification/` into your project.
+Add this to your Cartfile
+```
+github "jefferycom/CWStatusBarNotification" "swift"
+```
+
+And then perform usual Carthage update commands.
 
 ## Usage
 
